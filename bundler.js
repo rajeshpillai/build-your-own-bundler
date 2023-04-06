@@ -55,19 +55,22 @@ function bundle(graph) {
   let modules = '';
   graph.forEach(mod => {
     modules += `${mod.id}: [
-      
-    ],`
+      function (require, module, exports) { 
+        ${mod.code}
+      },
+    ],`;
   });
   const result = `
     (function () {
    
     })({${modules}});
   `;
+  return result;
 }
 
 const graph = createGraph('./example/entry.js');
-//const result = bundle(graph);
+const result = bundle(graph);
 
-console.log(graph);
+console.log(result);
 
 
